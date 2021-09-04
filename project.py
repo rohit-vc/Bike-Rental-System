@@ -28,9 +28,21 @@ def remove_bike_owners():
         print(f"{counter}. {owner_details[i][1]}, User Id = {i}")
     print("")
     choice = input('Enter User ID of Bike Owner you want to remove: ')
-    print(f"{owner_details[i][1]} removed successfully")
-    owner_details.pop(choice)
-    admistrator_functions()
+    try:
+        print("")
+        print(f"{owner_details[choice][1]} and all added bikes for renting by {owner_details[choice][1].lower()} are removed successfully")
+        print("Please Note: Bike which were rended are not removed as it can only done by customer")
+        owner_details.pop(choice)
+        for i in bikes_list:
+            if bikes[i][1] == choice:
+                bikes.pop(i)
+        admistrator_functions()
+
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        remove_bike_owners()
+    
 
 def remove_customer():
     counter = 0
@@ -38,19 +50,29 @@ def remove_customer():
         counter += 1
         print(f"{counter}. {customer_details[i][1]}, User Id = {i}")
     print("")
-    choice = input('Enter User ID of Bike Owner you want to remove: ')
-    print(f"{customer_details[i][1]} removed successfully")
-    customer_details.pop(choice)
-    admistrator_functions()
+    try:
+        choice = input('Enter User ID of Bike Owner you want to remove: ')
+        print(f"{customer_details[choice][1]} removed successfully")
+        customer_details.pop(choice)
+        admistrator_functions()
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        remove_customer()
 
 def remove_bikes():
     view_bikes()
     print("")
-    choice = input('Enter chassis number of bike to be remove: ').lower()
-    print("")
-    print(f"{bikes[choice][1]} is removed successfully")
-    bikes.pop(choice)
-    admistrator_functions()
+    try:
+        choice = input('Enter chassis number of bike to be remove: ').lower()
+        print("")
+        print(f"{bikes[choice][1]} is removed successfully")
+        bikes.pop(choice)
+        admistrator_functions()
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        remove_customer()
 
 def admistrator_functions():
     print("")
@@ -64,7 +86,13 @@ def admistrator_functions():
     print("6: Main Menu")
     print("7: Exit")
     print("")
-    choice = int(input('Enter your choice: '))
+
+    try:
+        choice = int(input('Enter your choice: '))
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        admistrator_functions()
     if choice ==1:
         customer_registeration()
     elif choice ==2:
@@ -84,7 +112,9 @@ def admistrator_functions():
         print("Invalid choice!! Please try again")
         admistrator_functions()
 
+# check this a gain
 def rent_bike():
+
     counter = 0
     for i in bikes_list:
             counter+=1
@@ -98,13 +128,26 @@ def rent_bike():
     print(("---------------------------------"))
     print(f"Total number of bikes available = {counter}.")
     print((""))
+    
     choice = input("Enter chassis number of bike your want to rent: ")
-    print("")
-    print(f"1: Daily basis - {bikes[choice][4]}₹ per day")
-    print(f"2: Weekly basis - {bikes[choice][5]}₹ per week")
-    print(f"3: Monthly basis - {bikes[choice][6]}₹ per month")
-    print("")
-    option = int(input("On what basis you want to rent (enter 1,2 or 3): "))
+    
+    try:
+        print("")
+        print(f"1: Daily basis - {bikes[choice][4]}₹ per day")
+        print(f"2: Weekly basis - {bikes[choice][5]}₹ per week")
+        print(f"3: Monthly basis - {bikes[choice][6]}₹ per month")
+        print("")
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        rent_bike()
+
+    try:
+        option = int(input("On what basis you want to rent (enter 1,2 or 3): "))
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        rent_bike()
     print("")
     if option == 1:
         m = 'Day(s)'
@@ -128,6 +171,8 @@ def rent_bike():
     customer_functions()
     
     
+
+# No Input is present
 def view_rented_bike():
     counter = 0
     for i in bikes_on_rent_list:
@@ -147,37 +192,43 @@ def return_rented_bike():
             print(f"{counter:} {bike_on_rent[i][1]}, Chassis Number = {i}")
             print(f"Rended for {bike_on_rent[i][9]} {bike_on_rent[i][8]} ")
     print("")
-    choice = input('Enter Chassis of bike you want to return: ')
+    try:
+        choice = input('Enter Chassis of bike you want to return: ')
+    
 
-    print(f"You rented {bike_on_rent[choice][1]} for {bike_on_rent[choice][9]} {bike_on_rent[choice][8]}")
-    print("")
-    print("Bill-")
-    print("")
-    print("----------------------")
-    print(" Bike Rental System")
-    print("")
-    print(f" Bike Name = {bike_on_rent[choice][1]}")
-    print("")
-    print(f" Rented for {bike_on_rent[choice][9]} {bike_on_rent[choice][8]} basis ")
-    print("")
-    print(f" Total amount = {bike_on_rent[choice][10]}₹")
-    print("")
-    print("")
-    print("")
-    print("----------------------")
-    print("")
-    bike_on_rent[choice].pop()
-    bike_on_rent[choice].pop()
-    bike_on_rent[choice].pop()
-    bike_on_rent[choice].pop()
+        print(f"You rented {bike_on_rent[choice][1]} for {bike_on_rent[choice][9]} {bike_on_rent[choice][8]}")
+        print("")
+        print("Bill-")
+        print("")
+        print("----------------------")
+        print(" Bike Rental System")
+        print("")
+        print(f" Bike Name = {bike_on_rent[choice][1]}")
+        print("")
+        print(f" Rented for {bike_on_rent[choice][9]} {bike_on_rent[choice][8]} basis ")
+        print("")
+        print(f" Total amount = {bike_on_rent[choice][10]}₹")
+        print("")
+        print("")
+        print("")
+        print("----------------------")
+        print("")
+        bike_on_rent[choice].pop()
+        bike_on_rent[choice].pop()
+        bike_on_rent[choice].pop()
+        bike_on_rent[choice].pop()
 
-    print("Bike reruned successfully")
-    bikes[choice] = bike_on_rent.pop(choice)
-    print("")
-    customer_functions()
+        print("Bike reruned successfully")
+        bikes[choice] = bike_on_rent.pop(choice)
+        print("")
+        customer_functions()
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        return_rented_bike()
 
 
-
+# No input messages
 def view_bikes():
     counter = 0
     for i in bikes_list:
@@ -208,7 +259,12 @@ def customer_functions():
     print(("5: Main Menu"))
     print(("6: Exit"))
     print((""))
-    choice = int(input('Enter your choice: '))
+    try:
+        choice = int(input('Enter your choice: '))
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        customer_functions()
 
     if choice == 1:
         view_bikes()
@@ -236,16 +292,23 @@ def owner_bike_remove():
             counter+=1
             print(f"{counter}: {bikes[i][1]} and chassis number {i}")
         print("")
+    
     choice = input('Enter the chassis number of bike to be removed: ').lower()
-    print((""))
-    print(f"{bikes[choice][1]} removed successfully")
+
+    try:
+        print((""))
+        print(f"{bikes[choice][1]} removed successfully")
+    except:
+        print((""))
+        print(("Invalid choice!! Please try again"))
+        owner_bike_remove()
     # print(bikes.pop(choice))
     # print(bikes)
 
     print((""))
     print(("---------------------------------"))
     owner_functions()
-
+# No input
 def view_bike_owner():
     print((""))
     print(("---------------------------------"))
@@ -263,13 +326,18 @@ def add_bike():
     print((""))
     print(("---------------------------------"))
     print(("Please Enter following details: "))
-    chassis_number = input('Please Enter chassis number: ')
-    bike_name = input("Please enter your bike's name: " )
-    engine_size = input('Please enter your engine size in cc: ')
-    milage = input('Please enter milage : ')
-    day_price = int(input('Please enter Daily rent amount in ₹: '))
-    week_price = int(input('Please enter Weekly rent amount in ₹: '))
-    month_price = int(input('Please enter Monthly rent amount in ₹: '))
+    try:
+        chassis_number = input('Please Enter chassis number: ')
+        bike_name = input("Please enter your bike's name: " )
+        engine_size = input('Please enter your engine size in cc: ')
+        milage = input('Please enter milage : ')
+        day_price = int(input('Please enter Daily rent amount in ₹: '))
+        week_price = int(input('Please enter Weekly rent amount in ₹: '))
+        month_price = int(input('Please enter Monthly rent amount in ₹: '))
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        add_bike()
 
     bikes[chassis_number] = [owner_username,bike_name,engine_size,milage,day_price,week_price,month_price]
     print("")
@@ -289,7 +357,12 @@ def owner_functions():
     print(("4: Main Menu"))
     print(("5: Exit"))
     print((""))
-    choice = int(input("Enter your choice: "))
+    try:
+        choice = int(input("Enter your choice: "))
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        owner_functions()
 
     if choice == 1:
         add_bike()
@@ -309,8 +382,13 @@ def owner_functions():
 def administer():
     print(("Please Enter your details"))
     print((""))
-    username = input('Please enter your username: ')
-    password = input('Please enter your password: ')
+    try:
+        username = input('Please enter your username: ')
+        password = input('Please enter your password: ')
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        administer()
     global admin_username
     admin_username = username
 
@@ -331,9 +409,13 @@ def bike_owner_login():
     print("Owner's Login")
     print("Please Enter Following Details")
     print((""))
-    username = input("Enter Your Username: ")
-    password = input("Enter Your Password: ")
-
+    try:
+        username = input("Enter Your Username: ")
+        password = input("Enter Your Password: ")
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        bike_owner_login()
     global owner_username
     owner_username = username
 
@@ -361,10 +443,15 @@ def bike_owner_registration():
     print(("---------------------------------"))
     print("Owner's Registeration")
     print(("Please Enter Your Following Details"))
-    name = input("Enter your name: ")
-    name = name.title()
-    user_id = input("Enter user ID: ")
-    password = input("Enter password: ")
+    try:
+        name = input("Enter your name: ")
+        name = name.title()
+        user_id = input("Enter user ID: ")
+        password = input("Enter password: ")
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        bike_owner_registration()
 
     if user_id in owner_ids:
         print("Username already exists")
@@ -393,7 +480,12 @@ def bike_owner():
     print("2: Register")
     print("3: Main menu")
     print("4: Exit")
-    choice = int(input("Enter your choice: "))
+    try:
+        choice = int(input("Enter your choice: "))
+    except:
+        print("")
+        print("Invalid Input!! Please try again")
+        bike_owner()
 
     if choice == 1:
         bike_owner_login()
@@ -408,7 +500,7 @@ def bike_owner():
         print("Invalid choice Please try again !!!")
         bike_owner()
 
-
+# No input
 def exit():
     datasaver = [customer_details, owner_details, admin, bikes, bike_on_rent]
     saver = open("datasaver.p","wb")
@@ -429,8 +521,12 @@ def starter():
     print(("2: Bike Owner's Portal"))
     print(("3: Customer's Portal"))
     print(("4: Exit"))
-    choice = int(input("Please Enter your choice: "))
-
+    try:
+        choice = int(input("Please Enter your choice: "))
+    except:
+        print((""))
+        print(("Invalid choice!! Please try again"))
+        starter()
     if choice == 1: 
         administer()
     elif choice == 2:
@@ -454,7 +550,12 @@ def customer():
     print("2: Register")
     print("3: Main menu")
     print("4: Exit")
-    choice = int(input("Enter your choice: "))
+    try:
+        choice = int(input("Enter your choice: "))
+    except:
+        print((""))
+        print(("Invalid choice!! Please try again"))
+        customer()
 
     if choice == 1:
         customer_login()
@@ -476,10 +577,15 @@ def customer_registeration():
     print((""))
     print(("Please Enter Your Following Details"))
     print((""))
-    name = input("Enter your name: ")
-    name = name.title()
-    user_id = input("Enter user ID: ")
-    password = input("Enter password: ")
+    try:
+        name = input("Enter your name: ")
+        name = name.title()
+        user_id = input("Enter user ID: ")
+        password = input("Enter password: ")
+    except:
+        print((""))
+        print(("Invalid choice!! Please try again"))
+        customer_registeration()
 
     if user_id in customer_ids:
         print("Username already exists")
@@ -501,8 +607,13 @@ def customer_login():
     print("Customer's Login")
     print("Please Enter Following Details")
     print((""))
-    username = input("Enter Your Username: ")
-    password = input("Enter Your Password: ")
+    try:
+        username = input("Enter Your Username: ")
+        password = input("Enter Your Password: ")
+    except:
+        print((""))
+        print(("Invalid choice!! Please try again"))
+        customer_login()
     global customer_username
     customer_username = username
     if username in customer_ids:
