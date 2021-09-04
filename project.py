@@ -36,7 +36,7 @@ def remove_bike_owners():
         for i in bikes_list:
             if bikes[i][1] == choice:
                 bikes.pop(i)
-        admistrator_functions()
+        administrator_functions()
 
     except:
         print("")
@@ -54,7 +54,7 @@ def remove_customer():
         choice = input('Enter User ID of Bike Owner you want to remove: ')
         print(f"{customer_details[choice][1]} removed successfully")
         customer_details.pop(choice)
-        admistrator_functions()
+        administrator_functions()
     except:
         print("")
         print("Invalid Input!! Please try again")
@@ -68,13 +68,13 @@ def remove_bikes():
         print("")
         print(f"{bikes[choice][1]} is removed successfully")
         bikes.pop(choice)
-        admistrator_functions()
+        administrator_functions()
     except:
         print("")
         print("Invalid Input!! Please try again")
         remove_customer()
 
-def admistrator_functions():
+def administrator_functions():
     print("")
     print("Please select from the following")
     print("")
@@ -92,7 +92,7 @@ def admistrator_functions():
     except:
         print("")
         print("Invalid Input!! Please try again")
-        admistrator_functions()
+        administrator_functions()
     if choice ==1:
         customer_registeration()
     elif choice ==2:
@@ -110,7 +110,7 @@ def admistrator_functions():
     else:
         print("")
         print("Invalid choice!! Please try again")
-        admistrator_functions()
+        administrator_functions()
 
 # check this a gain
 def rent_bike():
@@ -243,7 +243,7 @@ def view_bikes():
     print(f"Total number of bikes available = {counter}.")
     try:
         if admin_username == 'rohit':
-            admistrator_functions()
+            administrator_functions()
     except:
         customer_functions()
 
@@ -396,7 +396,7 @@ def administer():
         print((""))
         print(("Login Successful"))
         print((""))
-        admistrator_functions()
+        administrator_functions()
     else :
         print("")
         print(("Invalid credentials"))
@@ -517,7 +517,7 @@ def starter():
     print((""))
     print(("---------------------------------"))
     print(("Please Select"))
-    print(("1: Admistrators's Portal"))
+    print(("1: Administrators's Portal"))
     print(("2: Bike Owner's Portal"))
     print(("3: Customer's Portal"))
     print(("4: Exit"))
